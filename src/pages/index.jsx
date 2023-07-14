@@ -210,6 +210,7 @@ function Home({ initialSettings }) {
     }
   }
   const headerStyle = initialSettings?.headerStyle || "underlined";
+  const themeColor = themes[initialSettings.color || "slate"][initialSettings.theme || "dark"];
 
   useEffect(() => {
     function handleKeyDown(e) {
@@ -248,11 +249,26 @@ function Home({ initialSettings }) {
             <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=4" />
           </>
         )}
+        {initialSettings.maskIcon ? (
+          initialSettings.maskIcon?.svg ? (
+            <>
+              <link rel="mask-icon" href={initialSettings.maskIcon?.svg} color={initialSettings.maskIcon?.color || themeColor} />
+            </>
+          ) : (
+            <>
+              <link rel="mask-icon" href={initialSettings.maskIcon} color={themeColor} />
+            </>
+          )
+        ) : (
+          <>
+            <link rel="mask-icon" href="/safari-pinned-tab.svg?v=4" color="#1e9cd7" />
+          </>
+        )}
         <meta
           name="msapplication-TileColor"
-          content={themes[initialSettings.color || "slate"][initialSettings.theme || "dark"]}
+          content={themeColor}
         />
-        <meta name="theme-color" content={themes[initialSettings.color || "slate"][initialSettings.theme || "dark"]} />
+        <meta name="theme-color" content={themeColor} />
       </Head>
       <div className="relative container m-auto flex flex-col justify-start z-10 h-full">
         <div
